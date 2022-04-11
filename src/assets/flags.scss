@@ -1,0 +1,6 @@
+$flag-icons-path: '~flag-icons/flags';
+$flag-icons-rect-path: '/4x3';
+$flag-icons-square-path: '/1x1';
+$include: 'eu', 'us', 'jp', 'xx';
+
+@import "~flag-icons/sass/flag-icons";
