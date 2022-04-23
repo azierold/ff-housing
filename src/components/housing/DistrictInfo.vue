@@ -14,6 +14,7 @@
           <h2 class="m-0">
             {{ district.name }} ({{ district.num_open_plots }} Open)
           </h2>
+        </div>
       </template>
       <Column field="ward_number" header="Ward" :sortable="true">
         <template #body="{ data }">
