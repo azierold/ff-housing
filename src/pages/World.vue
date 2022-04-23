@@ -28,6 +28,7 @@ export default defineComponent({
 
     const updateData = async (worldId) => {
       loading.value = true;
+      world.value = {};
       world.value = await fetchData(worldId);
       loading.value = false;
     };

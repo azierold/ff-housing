@@ -11,7 +11,9 @@
     >
       <template #header>
         <div class="flex justify-content-between align-items-center">
-          <h2 class="m-0">{{ district.name }} ({{ district.num_open_plots }} Open)</h2>
+          <h2 class="m-0">
+            {{ district.name }} ({{ district.num_open_plots }} Open)
+          </h2>
           <div>
             <div>Last Update</div>
             <div>{{ formatDate(district.oldest_plot_time * 1000) }}</div>
@@ -19,22 +21,34 @@
         </div>
       </template>
       <Column field="ward_number" header="Ward" :sortable="true">
-        <template #body="{ data }">{{ data.ward_number + 1 }}</template>
+        <template #body="{ data }">
+          <div>{{ data.ward_number + 1 }}</div>
+        </template>
       </Column>
       <Column field="plot_number" header="Plot" :sortable="true">
-        <template #body="{ data }">{{ data.plot_number + 1 }}</template>
+        <template #body="{ data }">
+          <div>{{ data.plot_number + 1 }}</div>
+        </template>
       </Column>
       <Column field="size" header="Size" :sortable="true">
-        <template #body="{ data }">{{ formatSize(data.size) }}</template>
+        <template #body="{ data }">
+          <div>{{ formatSize(data.size) }}</div>
+        </template>
       </Column>
       <Column field="price" header="Price" :sortable="true">
-        <template #body="{ data }">{{ data.price.toLocaleString() }}</template>
+        <template #body="{ data }">
+          <div>{{ data.price.toLocaleString() }}</div>
+        </template>
       </Column>
-      <Column field="purchase_system" header="Type" :sortable="true" />
+      <Column field="purchase_system" header="Type" :sortable="true">
+        <template #body="{ data }">
+          <div>{{ formatType(data.purchase_system) }}</div>
+        </template>
+      </Column>
       <Column field="last_updated_time" header="Updated" :sortable="true">
-        <template #body="{ data }">{{
-          formatDate(data.last_updated_time * 1000)
-        }}</template>
+        <template #body="{ data }">
+          <div>{{ formatDate(data.last_updated_time * 1000) }}</div>
+        </template>
       </Column>
     </DataTable>
   </div>
@@ -63,8 +77,20 @@ export default defineComponent({
           return "L";
       }
     };
+    const formatType = (mask) => {
+      const isLottery = (mask & (1 << 0)) > 0;
+      const isFC = (mask & (1 << 1)) > 0;
+      const isPersonal = (mask & (1 << 2)) > 0;
 
-    return { formatDate, formatSize };
+      let output = '';
+      output += isFC ? 'FC' : '';
+      output += isPersonal ? 'Personal' : '';
+      output += isLottery ? ' (Lottery)' : ' (FFA)'
+
+      return output;
+    };
+
+    return { formatDate, formatSize, formatType };
   },
 });
 </script>
