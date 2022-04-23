@@ -1,16 +1,20 @@
 <template>
   <WorldInfo :world="world" />
+  <div class="flex" v-if="loading">
+    <ProgressSpinner />
+  </div>
 </template>
 
 <script>
 import { defineComponent, onMounted, ref } from "vue";
 import { onBeforeRouteUpdate, useRoute } from "vue-router";
+import ProgressSpinner from "primevue/progressspinner";
 import WorldInfo from "../components/housing/WorldInfo.vue";
 
 const API_URL = "https://paissadb.zhu.codes/worlds";
 
 export default defineComponent({
-  components: { WorldInfo },
+  components: { ProgressSpinner, WorldInfo },
   setup() {
     const route = useRoute();
 
@@ -38,7 +42,7 @@ export default defineComponent({
       }
     });
 
-    return { world };
+    return { world, loading };
   },
 });
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div>{{ world.name }}</div>
+    <h1>{{ world.name }}</h1>
 
     <div class="districts-wrap">
       <DistrictInfo
