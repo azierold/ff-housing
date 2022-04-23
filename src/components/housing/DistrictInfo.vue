@@ -14,11 +14,6 @@
           <h2 class="m-0">
             {{ district.name }} ({{ district.num_open_plots }} Open)
           </h2>
-          <div>
-            <div>Last Update</div>
-            <div>{{ formatDate(district.oldest_plot_time * 1000) }}</div>
-          </div>
-        </div>
       </template>
       <Column field="ward_number" header="Ward" :sortable="true">
         <template #body="{ data }">
@@ -82,12 +77,16 @@ export default defineComponent({
       const isFC = (mask & (1 << 1)) > 0;
       const isPersonal = (mask & (1 << 2)) > 0;
 
-      let output = '';
-      output += isFC ? 'FC' : '';
-      output += isPersonal ? 'Personal' : '';
-      output += isLottery ? ' (Lottery)' : ' (FFA)'
+      const parts = [];
+      if (isFC) {
+        parts.push("FC");
+      }
+      if (isPersonal) {
+        parts.push("Personal");
+      }
+      parts.push(isLottery ? "(Lottery)" : "(FFA)");
 
-      return output;
+      return parts.join(" ");
     };
 
     return { formatDate, formatSize, formatType };
