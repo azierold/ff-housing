@@ -74,17 +74,13 @@ export default defineComponent({
       }
     };
     const formatType = (mask) => {
-      const isLottery = (mask & (1 << 0)) > 0;
-      const isFC = (mask & (1 << 1)) > 0;
-      const isPersonal = (mask & (1 << 2)) > 0;
+      const isLottery = (1 & mask) > 0;
+      const isFC = (2 & mask) > 0;
+      const isPersonal = (4 & mask) > 0;
 
       const parts = [];
-      if (isFC) {
-        parts.push("FC");
-      }
-      if (isPersonal) {
-        parts.push("Personal");
-      }
+      isFC && parts.push("FC");
+      isPersonal && parts.push("Personal");
       parts.push(isLottery ? "(Lottery)" : "(FFA)");
 
       return parts.join(" ");
